@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<soapenv:Header>
+		<CustomHeader soapenv:actor="http://schemas.xmlsoap.org/soap/actor/next"
+			soapenv:mustUnderstand="0">
+			<userName>&#x5F20;&#x4E09;</userName>
+			<userPassWord>202cb962ac59075b964b07152d234b70</userPassWord>
+		</CustomHeader>
+	</soapenv:Header>
+	<soapenv:Body>
+		<query xmlns="http://data.shunde.gov.cn/">
+			<sId xmlns="">108</sId>
+			<type xmlns="">0</type>
+			<requestJson xmlns="">{&quot;fileType&quot;:[&quot;date&quot;,&quot;number&quot;,&quot;string&quot;],&quot;name&quot;:&quot;&#x8C2D;&#x6069;&#x6770;&quot;,&quot;pageSize&quot;:10,&quot;IdCard&quot;:&quot;440623196211162023&quot;,&quot;pageNum&quot;:1}
+			</requestJson>
+		</query>
+	</soapenv:Body>
+</soapenv:Envelope>
