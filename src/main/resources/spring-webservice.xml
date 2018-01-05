@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jaxws="http://cxf.apache.org/jaxws"
+	xsi:schemaLocation="http://cxf.apache.org/jaxws
+       http://cxf.apache.org/schemas/jaxws.xsd http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd"
+	default-lazy-init="true">
+
+
+	<!--发布webservice -->
+	<!-- WebService的实现Bean定义 -->
+	<!--web.xml配置了webservice的访问路径/server/*，那么/server/web-publish?wsdl就是该webservice的访问路径 -->
+	<bean id="sessionInstance" class="cn.gov.shunde.util.SessionInstance" />
+	
+	<bean id="webserviceServer" class="cn.gov.shunde.data.impl.DataQueryserviceImpl">
+		<property name="sessionInstance" ref="sessionInstance" />
+	</bean>
+	<!-- jax-ws endpoint定义 -->
+	<jaxws:endpoint id="myService" implementor="#webserviceServer"
+		address="/web-query">
+		<jaxws:inInterceptors>
+			<bean class="org.apache.cxf.interceptor.LoggingInInterceptor"></bean>
+			<bean class="cn.gov.shunde.handle.MyServerInterceptor">
+				<property name="sessionInstance" ref="sessionInstance" />
+			</bean>
+		</jaxws:inInterceptors>
+	</jaxws:endpoint>
+	<!--发布webservice -->
+</beans>

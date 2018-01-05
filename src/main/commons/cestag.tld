@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<taglib xmlns="http://java.sun.com/xml/ns/javaee"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-jsptaglibrary_2_1.xsd"
+        version="2.1">
+
+    <description>ces 统一自定义标签</description>
+    <display-name>ces core</display-name>
+    <tlib-version>1.1</tlib-version>
+    <short-name>ces</short-name>
+    <tag>
+        <!--定义属性的名称。每个标签的是属性名称必须是唯一的。-->
+        <name>selectTag</name>
+        <tag-class>com.ces.sys.controller.DictSelectTag</tag-class>
+        <body-content>empty</body-content>
+        <!--系统编码-->
+        <attribute>
+            <name>systemCode</name>
+            <!--指定属性是否是必须的或者可选的,如果设置为false为可选。-->
+            <required>true</required>
+            <!--声明在运行表达式时，标签属性是否有效。-->
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <!--select 的id值-->
+        <attribute>
+            <name>selectId</name>
+            <!--指定属性是否是必须的或者可选的,如果设置为false为可选。-->
+            <required>false</required>
+            <!--声明在运行表达式时，标签属性是否有效。-->
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <!--select 的name值-->
+        <attribute>
+            <name>selectName</name>
+            <!--指定属性是否是必须的或者可选的,如果设置为false为可选。-->
+            <required>true</required>
+            <!--声明在运行表达式时，标签属性是否有效。-->
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <!--value 选中的值-->
+        <attribute>
+            <name>value</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <!--默认选中的值-->
+        <attribute>
+            <name>selectedValue</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <!--选中任意一项时触发的方法-->
+        <attribute>
+            <name>onChange</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <!--选择方式 单选/多选-->
+        <attribute>
+            <name>multiple</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <!--select 未选择时显示内容 如："请选择"或者"所有"等-->
+        <attribute>
+            <name>nullName</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <!--select 未选择时显示内容的位置 在顶部还是在底部-->
+        <attribute>
+            <name>nullNamePlace</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <!--是否有下一级-->
+        <attribute>
+            <name>hasNext</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+
+        <!--上级ID-->
+        <attribute>
+            <name>parentId</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <!--额外的一些显示层的参数-->
+        <!--样式类-->
+        <attribute>
+            <name>cssClass</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <!--内联样式-->
+        <attribute>
+            <name>styleClass</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <!--内联样式-->
+        <attribute>
+            <name>datatype</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+    </tag>
+</taglib>

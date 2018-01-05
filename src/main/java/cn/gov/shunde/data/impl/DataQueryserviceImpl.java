@@ -1,35 +1,35 @@
 package cn.gov.shunde.data.impl;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.jws.WebService;
 
-import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 
 import cn.gov.shunde.data.DataQueryService;
+import cn.gov.shunde.util.SessionInstance;
 
 /**
- * Created by luopc on 2017/12/20.
- * data.shunde.gov.cn
- * cn.gov.shunde.data
+ * Created by luopc on 2017/12/20. data.shunde.gov.cn cn.gov.shunde.data
  */
 @WebService(endpointInterface = "cn.gov.shunde.data.DataQueryService")
 public class DataQueryserviceImpl implements DataQueryService {
-	
-	
+
+	@Autowired
+	private SessionInstance sessionInstance;
 
 	@Override
 	public String query(String sId, String type, String requestJson) {
-		if (StringUtils.isNotBlank(sId)) {
-			if (sId != null) {
-				return requestJson;
-			}else{
-				return JSON.toJSONString(nullJsonRs());
-			}
-		}else{
-			return JSON.toJSONString(nullJsonRs());
-		}
+		String userId = String.valueOf(sessionInstance.getValue("userId"));
+		String userName = String.valueOf(sessionInstance.getValue("userName"));
+		System.out.println("main - [userName=" + userName + ",userId=" + userId + "]");
+		Map<String,Object> map = new HashMap<>();
+		map.put("userName", userName);
+		map.put("userId", userId);
+		return JSON.toJSONString(map);
 	}
 
 	@Override
@@ -38,16 +38,10 @@ public class DataQueryserviceImpl implements DataQueryService {
 		return "";
 	}
 
-	/**
-	 * 返回空JSON
-	 * @return
-	 */
-	public JSONObject nullJsonRs() {
-		JSONObject data = new JSONObject();
-		data.put("STATUS","FAIL");
-		data.put("MSG","查询出错");
-		return data ;
+	public void setSessionInstance(SessionInstance sessionInstance) {
+		this.sessionInstance = sessionInstance;
 	}
-   
+	
+	
 
 }

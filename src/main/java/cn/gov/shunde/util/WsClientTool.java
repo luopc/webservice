@@ -3,23 +3,9 @@ package cn.gov.shunde.util;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.HashMap;
-import java.util.Map;
-
-import com.alibaba.fastjson.JSON;
 
 public class WsClientTool {
 	
-	/**
-	 * 解析返回的json数据
-	 * 
-	 * @param jsonresult
-	 * @return
-	 */
-	public static Map<String, Object> getOutMap(String jsonresult) {
-		Map<String, Object> outDatas = JSON.parseObject(jsonresult, new HashMap<String, Object>().getClass());
-		return outDatas;
-	}
 	
 	 /**
 	  * 
