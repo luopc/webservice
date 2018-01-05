@@ -1,24 +1,42 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
-	version="3.0">
-	<!-- session超时定义,单位为分钟 -->
-	<session-config>
-		<session-timeout>180</session-timeout>
-	</session-config>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	version="2.5">
 
-	<!-- Spring ApplicationContext配置文件的路径,可使用通配符，多个路径用,号分隔 此参数用于后面的Spring-Context 
-		loader -->
+	<!--不加这句话的话项目启动默认首页为index，删除index.jsp也行 -->
+	<!--springmvc是不需要ContextLoaderListener来加载管理bean的，DispatcherServlet它有自己的容器，主要用于加载除控制器层的bean,DispatcherServlet属于子容器。 
+		cxf需要ContextLoaderListener，cxf需要ContextLoaderListener是spring管理bean的父容器，一般用于加载非控制器层的bean。 
+		子容器可以访问父容器中的bean，而父容器不能访问子容器。 可以把基本web请求的controller等这些bean放到spring-web.xml中，让DispatcherServlet去加载管理spring-web.xml。 
+		把webservice相关配置到另外一个xml文件中,比如spring-webservice.xml, 让ContextLoaderListener去加载管理spring-webservice.xml和其他spring文件（）spring-mysql.xml,spring-jpa.xml等）， 
+		这样，就互不影响了。 -->
+	<welcome-file-list>
+		<welcome-file>index.jsp</welcome-file>
+	</welcome-file-list>
+
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
-		<param-value> classpath:spring/application-cxf.xml</param-value>
+		<param-value>classpath:spring-webservice.xml</param-value>
 	</context-param>
 
+	<servlet>
+		<servlet-name>springServlet</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>classpath:spring-web.xml</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>springServlet</servlet-name>
+		<url-pattern>/</url-pattern>
+	</servlet-mapping>
 
-
-	<!-- Character Encoding filter -->
+	<listener>
+		<listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
+	</listener>
 	<filter>
-		<filter-name>CharacterEncodingFilter</filter-name>
+		<filter-name>characterEncodingFilter</filter-name>
 		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
 		<init-param>
 			<param-name>encoding</param-name>
@@ -30,38 +48,18 @@
 		</init-param>
 	</filter>
 	<filter-mapping>
-		<filter-name>CharacterEncodingFilter</filter-name>
+		<filter-name>characterEncodingFilter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
+	
+	
 
-	<!--Spring ApplicationContext 载入 -->
+	<!--Spring MVC是通过DispatcherServlet来加载Spring配置文件的，因此不需要在web.xml中配置ContextLoaderListener。 
+		但是CXF却需要通过ContextLoaderListener来加载Spring。 -->
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
-	<!-- 使Spring支持request与session的scope,如:<bean id="loginAction" class="com.foo.LoginAction" 
-		scope="request"/> -->
-	<listener>
-		<listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
-	</listener>
-	<!-- Spring 刷新Introspector防止内存泄露 -->
-	<listener>
-		<listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class>
-	</listener>
-
-	<!-- springmvc 配置 -->
-	<servlet>
-		<servlet-name>springmvc</servlet-name>
-		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
-		<init-param>
-			<param-name>contextConfigLocation</param-name>
-			<param-value>classpath:spring/application-web.xml</param-value>
-		</init-param>
-		<load-on-startup>1</load-on-startup>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>springmvc</servlet-name>
-		<url-pattern>*.do</url-pattern>
-	</servlet-mapping>
+	
 
 	<!-- 配置CXF框架的核心Servlet -->
 	<servlet>
@@ -73,13 +71,4 @@
 		<servlet-name>CXFServlet</servlet-name>
 		<url-pattern>/server/*</url-pattern>
 	</servlet-mapping>
-
-	<context-param>
-		<param-name>webAppRootKey</param-name>
-		<param-value>webapp.ws</param-value>
-	</context-param>
-
-	<welcome-file-list>
-		<welcome-file>index.jsp</welcome-file>
-	</welcome-file-list>
 </web-app>
